@@ -1,0 +1,153 @@
+import 'package:app02/controllers/visualizadas.dart';
+import 'package:flutter/material.dart';
+import 'package:app02/models/conversa.dart';
+import 'package:app02/models/conversas.dart';
+import 'package:provider/provider.dart';
+
+class TelaInicial extends StatelessWidget {
+  const TelaInicial({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final tabela = ConversarRepositorio.tabela;
+
+    return Scaffold(
+      body: Container(
+        color: Colors.black,
+        padding: EdgeInsets.all(16),
+        child: Column(
+          children: [
+            // (Aqui vai o restante da sua UI, como botões e barra de pesquisa)
+            Expanded(
+              child: ListView.separated(
+                itemBuilder: (BuildContext context, int conversa) {
+                  return Consumer<Visualizadas>(
+                    builder: (context, visualizadasProvider, child) {
+                      return ListTile(
+                        leading: ClipRRect(
+                          borderRadius: BorderRadius.circular(50.0),
+                          child: Image.asset(
+                            tabela[conversa].icone,
+                            width: 60.0,
+                            height: 60.0,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        title: Text(
+                          tabela[conversa].titulo,
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                          ),
+                        ),
+                        subtitle: Text(
+                          tabela[conversa].subtitulo,
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey,
+                          ),
+                        ),
+                        trailing: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              tabela[conversa].tempo,
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey,
+                              ),
+                            ),
+                            Text(
+                              'olio', // Remover ou modificar se necessário
+                              style: TextStyle(color: Colors.amber),
+                            ),
+                          ],
+                        ),
+                        selected: visualizadasProvider.selectedIndex == conversa,
+                        selectedTileColor: Colors.amber,
+                        onLongPress: () {
+                          visualizadasProvider.selecionarConversa(conversa);
+                        },
+                      );
+                    },
+                  );
+                },
+                padding: EdgeInsets.all(16),
+                separatorBuilder: (_, __) => Divider(),
+                itemCount: tabela.length,
+              ),
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        items: [
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.blur_circular,
+                color: Colors.grey,
+              ),
+              label: 'Atualizações'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.phone_outlined, color: Colors.grey),
+              label: 'Chamadas'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.people_outline, color: Colors.grey),
+              label: 'Comunidades'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.chat_rounded, color: Colors.grey),
+              label: 'Conversas'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.brightness_high_outlined, color: Colors.grey),
+              label: 'Definições'),
+        ],
+        backgroundColor: Color.fromARGB(255, 61, 61, 61),
+      ),
+    );
+  }
+}
+
+
+import 'package:app02/Views/telainicial.dart';
+import 'package:app02/controllers/visualizadas.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+void main() {
+  return runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => Visualizadas()),
+      ],
+      child: MyApp(),
+    ),
+  );
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Tela do Whatsapp',
+      home: TelaInicial(),
+    );
+  }
+}
+
+
+import 'package:flutter/material.dart';
+
+class Visualizadas extends ChangeNotifier {
+  int? _selectedIndex; 
+
+  int? get selectedIndex => _selectedIndex;
+
+  void selecionarConversa(int index) {
+    _selectedIndex = index;
+    notifyListeners();
+  }
+}
+
