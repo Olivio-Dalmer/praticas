@@ -1,10 +1,13 @@
+import 'package:app02/models/message.dart';
+
 class Conversa {
   String icone;
   String titulo;
   String subtitulo;
-  String tempo;
+  DateTime tempo;
   String descricao;
   bool estado;
+  List<Message> messages;
 
   Conversa({
     required this.icone,
@@ -13,5 +16,6 @@ class Conversa {
     required this.tempo,
     required this.descricao,
     required this.estado,
+    required this.messages,
   });
 }

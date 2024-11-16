@@ -2,14 +2,15 @@ import 'package:app02/Views/telainicial.dart';
 import 'package:app02/controllers/visualizadas.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 void main() {
-  return   runApp(
+  return runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => Visualizadas()),
       ],
-      child: MyApp(),
+      child: const MyApp(),
     ),
   );
 }
@@ -19,13 +20,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Tela do Whatsapp',
-      debugShowCheckedModeBanner: false,
-      home: ChangeNotifierProvider(
-        child: TelaInicial(),
-        create: (_) => Visualizadas(),
-      ),
+    return ResponsiveSizer(
+      builder: (context, orientetion, deviceType) {
+        return const MaterialApp(
+          title: 'Tela do Whatsapp',
+          debugShowCheckedModeBanner: false,
+          home: TelaInicial(),
+        );
+      },
     );
   }
 }
