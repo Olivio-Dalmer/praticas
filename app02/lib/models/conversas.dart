@@ -59,7 +59,8 @@ class ConversarRepositorio {
     Conversa(
       icone: 'images/Picture.png',
       titulo: 'Forex Traders BR',
-      subtitulo: '~Carlos Trader: cansei',
+      subtitulo:
+          '~Carlos Trader: cansei~Carlos Trader: cansei~Carlos Trader: cansei ~Carlos Trader: cansei~Carlos Trader: cansei ~Carlos Trader: cansei~Carlos Trader: cansei ~Carlos Trader: cansei~Carlos Trader: cansei',
       tempo: DateTime.now(),
       descricao: '15:34',
       estado: false,

@@ -30,4 +30,8 @@ class MyApp extends StatelessWidget {
       },
     );
   }
+  // PROVIDER -
+  // NAVEGAÇÃO
+  // RESPONSIVIDADE
+  //COMPONENTIZAÇÃO DE WIDGETS
 }
